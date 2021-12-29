@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Chat App',
-        initialRoute: 'login',
+        initialRoute: 'usuarios',
         routes: appRoutes,
         theme: ThemeData.dark(),
       );
