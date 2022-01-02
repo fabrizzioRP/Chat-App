@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 
 class BotonAzul extends StatelessWidget {
   final String text;
-  final Color backColor;
   final double? width, height;
   final VoidCallback? send;
 
   const BotonAzul({
     Key? key,
     required this.text,
-    required this.backColor,
     required this.send,
     this.height = 55,
     this.width = double.infinity,
@@ -28,7 +26,7 @@ class BotonAzul extends StatelessWidget {
       style: ButtonStyle(
         elevation: MaterialStateProperty.all(2.0),
         shape: MaterialStateProperty.all(const StadiumBorder()),
-        backgroundColor: MaterialStateProperty.all(backColor),
+        //backgroundColor: MaterialStateProperty.all(backColor),
       ),
       onPressed: send,
     );

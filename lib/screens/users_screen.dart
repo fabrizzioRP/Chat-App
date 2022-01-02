@@ -1,9 +1,11 @@
 // ignore_for_file: use_key_in_widget_constructors, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 //
 import 'package:chat_app/models/usuario.dart';
+import 'package:chat_app/services/auth_service.dart';
 
 class UsersScreen extends StatefulWidget {
   @override
@@ -55,18 +57,23 @@ class _UsersScreenState extends State<UsersScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+    final usuario = authService.usuario;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text(
-          'Fabrizzio',
-          style: TextStyle(fontWeight: FontWeight.w400),
+        title: Text(
+          usuario.nombre,
+          style: const TextStyle(fontWeight: FontWeight.w400),
         ),
         elevation: 1,
         leading: IconButton(
           tooltip: 'Exit',
           icon: const Icon(Icons.exit_to_app),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushReplacementNamed(context, 'login');
+            AuthService.deleteToken();
+          },
         ),
         actions: [
           Container(
@@ -104,7 +111,7 @@ class _UsersScreenState extends State<UsersScreen> {
           backgroundColor: Colors.blue.shade300,
           child: Text(user.nombre.substring(0, 2),
               style: const TextStyle(fontSize: 18)),
-          maxRadius: 30,
+          maxRadius: 25,
         ),
         trailing: Container(
           width: 10,

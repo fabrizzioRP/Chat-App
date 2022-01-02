@@ -1,5 +1,8 @@
+import 'package:chat_app/helpers/show_alert.dart';
+import 'package:chat_app/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:chat_app/widgets/widgets.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -52,6 +55,7 @@ class __FormState extends State<_Form> {
 
   @override
   Widget build(BuildContext context) {
+    final consumeProvider = Provider.of<AuthService>(context);
     return Container(
       margin: const EdgeInsets.only(top: 40),
       padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -83,13 +87,23 @@ class __FormState extends State<_Form> {
           const SizedBox(height: 35),
           BotonAzul(
             text: 'Register',
-            backColor: Colors.blue,
-            send: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-              print(nameCtrl.text);
-              print(emailCtrl.text);
-              print(passCtrl.text);
-            },
+            send: (consumeProvider.authenticante)
+                ? null
+                : () async {
+                    FocusScope.of(context).unfocus();
+                    final registerOk = await consumeProvider.register(
+                      nameCtrl.text.trim(),
+                      emailCtrl.text.trim(),
+                      passCtrl.text.trim(),
+                    );
+
+                    if (registerOk == true) {
+                      // TODO: aca hacer el efecto de nuestro anterior proyecto del boton
+                      Navigator.pushReplacementNamed(context, 'login');
+                    } else {
+                      showAlert(context, 'Registro Incorrecto', registerOk);
+                    }
+                  },
           ),
         ],
       ),
