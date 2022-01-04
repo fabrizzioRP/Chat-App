@@ -6,6 +6,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 //
 import 'package:chat_app/models/usuario.dart';
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 
 class UsersScreen extends StatefulWidget {
   @override
@@ -58,19 +59,21 @@ class _UsersScreenState extends State<UsersScreen> {
   @override
   Widget build(BuildContext context) {
     final authService = Provider.of<AuthService>(context);
+    final socketService = Provider.of<SocketService>(context);
     final usuario = authService.usuario;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          usuario.nombre,
-          style: const TextStyle(fontWeight: FontWeight.w400),
+          usuario.nombre.toUpperCase(),
+          style: const TextStyle(fontWeight: FontWeight.w300),
         ),
         elevation: 1,
         leading: IconButton(
           tooltip: 'Exit',
           icon: const Icon(Icons.exit_to_app),
           onPressed: () {
+            socketService.disconnect();
             Navigator.pushReplacementNamed(context, 'login');
             AuthService.deleteToken();
           },
@@ -78,8 +81,9 @@ class _UsersScreenState extends State<UsersScreen> {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: 10),
-            //child: Icon(Icons.check_circle, color: Colors.green),
-            child: const Icon(Icons.offline_bolt, color: Colors.red),
+            child: (socketService.serverStatus == ServerStatus.Online)
+                ? const Icon(Icons.check_circle, color: Colors.green)
+                : const Icon(Icons.offline_bolt, color: Colors.red),
           )
         ],
       ),

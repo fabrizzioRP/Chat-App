@@ -16,7 +16,7 @@ class BotonAzul extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Container(
+      child: SizedBox(
         width: width,
         height: height,
         child: Center(
