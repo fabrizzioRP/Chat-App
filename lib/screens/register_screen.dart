@@ -100,7 +100,6 @@ class __FormState extends State<_Form> {
                     );
 
                     if (registerOk == true) {
-                      // TODO: aca hacer el efecto de nuestro anterior proyecto del boton
                       Navigator.pushReplacementNamed(context, 'login');
                     } else {
                       showAlert(context, 'Registro Incorrecto', registerOk);

@@ -1,10 +1,11 @@
-import 'package:chat_app/services/socket_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import 'routes/routes.dart';
+import 'services/chat_service.dart';
 import 'package:chat_app/services/auth_service.dart';
+import 'package:chat_app/services/socket_service.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light.copyWith(
@@ -23,6 +24,7 @@ class AppState extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
         ChangeNotifierProvider(create: (_) => SocketService()),
+        ChangeNotifierProvider(create: (_) => ChatService()),
       ],
       child: const MyApp(),
     );
